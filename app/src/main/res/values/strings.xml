@@ -15,4 +15,6 @@
     <string name="resons">Выбери карты которые помогут решить проблему</string>
 
     <string name="testi">Тесты</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
