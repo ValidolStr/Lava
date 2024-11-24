@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FAFAFA</color>
+    <color name="sinij">#004A7C</color>
+    <color name="blue">#005691</color>
+    <color name="whiteblue">#E8F1F5</color>
+    <color name="yellov1">#FFF970</color>
+    <color name="people">#62DFC0</color>
+    <color name="textcolor">#1E1E16</color>
+
+    <color name="buttonColor">#00C7E6</color> <!-- Белый для контраста -->
+    <color name="buttonTextColor">#FF4500</color> <!-- Оранжевый для текста -->
+    <color name="secondaryButtonColor">#4B0082</color> <!-- Индиго для вторичных кнопок -->
+    <color name="secondaryButtonTextColor">#FFFFFF</color>
+
+</resources>

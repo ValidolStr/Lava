@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".MetaforikActivity"
+    tools:layout_editor_absoluteY="24dp">
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="250sp"
+        android:layout_height="60sp"
+        android:layout_marginBottom="56dp"
+        android:fontFamily="casual"
+        android:onClick="svichCart"
+        android:text="@string/rassifrov"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="DuplicateSpeakableTextCheck,TextSizeCheck" />
+
+    <FrameLayout
+        android:layout_width="373dp"
+        android:layout_height="138dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        tools:ignore="TextSizeCheck">
+
+        <TextView
+            android:id="@+id/overlayTextLiner"
+            android:layout_width="370dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical"
+            android:text="@string/resons"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            tools:ignore="RtlCompat,TextSizeCheck,VisualLintOverlap" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="382dp"
+            android:layout_height="127dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/button5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="VisualLintBounds">
+
+            <ImageView
+                android:id="@+id/secondimg1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/Carts"
+                android:onClick="svichCart"
+                tools:ignore="ImageContrastCheck,DuplicateSpeakableTextCheck" />
+
+            <ImageView
+                android:id="@+id/secondimg2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/Carts"
+                android:onClick="svichCart"
+                tools:ignore="ImageContrastCheck" />
+
+            <ImageView
+                android:id="@+id/secondimg3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/Carts"
+                android:onClick="svichCart"
+                tools:ignore="ImageContrastCheck" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="367dp"
+        android:layout_height="358dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/metastart"
+        tools:ignore="TextSizeCheck">
+
+        <TextView
+            android:id="@+id/overlayText"
+            android:layout_width="370dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_vertical"
+            android:text="@string/problem"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            tools:ignore="RtlCompat,TextSizeCheck,VisualLintOverlap,VisualLintBounds" />
+
+        <ImageView
+            android:id="@+id/mainimg"
+            android:layout_width="370dp"
+            android:layout_height="370dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/Carts"
+            android:onClick="svichCart"
+            android:scaleType="fitXY"
+            tools:ignore="ImageContrastCheck,DuplicateSpeakableTextCheck,VisualLintBounds" />
+
+
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/metastart"
+        android:layout_width="376dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="casual"
+        android:text="@string/textlong"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextSizeCheck" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:clickable="true"
+        android:contentDescription="@string/exit"
+        android:focusable="true"
+        android:onClick="Jamptoback"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.36"
+        app:layout_constraintStart_toEndOf="@+id/button5"
+        app:srcCompat="@android:drawable/ic_menu_revert" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

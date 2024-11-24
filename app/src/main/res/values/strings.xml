@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Psihologi</string>
+    <string name="logo">Airy</string>
+    <string name="Test">Тесты</string>
+    <string name="metafor">Карты</string>
+    <string name="rassifrov">Расшифровка</string>
+    <string name="Carts">карта</string>
+    <string name="Tecniks">Техники</string>
+    <string name="Stats">Статистика</string>
+    <string name="Metaforicstart">Выберите карты</string>
+    <string name="textlong">Выберите карты</string>
+    <string name="exit">exit</string>
+
+    <string name="problem">Выбери карту которая олицетворяет проблему</string>
+    <string name="resons">Выбери карты которые помогут решить проблему</string>
+
+    <string name="testi">Тесты</string>
+</resources>
