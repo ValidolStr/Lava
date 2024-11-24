@@ -59,12 +59,12 @@ public class MetaforikActivity extends AppCompatActivity {
         String imageName;
 
         // Clear current images set if all 30 images are used
-        if (currentImages.size() >= 28) {
+        if (currentImages.size() >= 58) {
             currentImages.clear();
         }
 
         do {
-            int randomIndex = random.nextInt(28) + 1; // Generate a random number from 1 to 30
+            int randomIndex = random.nextInt(58) + 1; // Generate a random number from 1 to 30
             imageName = "cart__" + randomIndex + "_";
         } while (currentImages.contains(imageName));
 
