@@ -1,43 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".fiveresult">
+
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fiveresult">
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <LinearLayout
+    <!-- Текст с текущим вопросом -->
+    <TextView
+        android:id="@+id/questionTextView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:text="Вопрос"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp" />
 
-        <Button
-            android:id="@+id/button12"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="да" />
+    <!-- Кнопки для выбора ответа -->
+    <Button
+        android:id="@+id/button5Points"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Да (5 очков)"
+        android:layout_marginBottom="8dp" />
 
-        <Button
-            android:id="@+id/button13"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="почти да" />
+    <Button
+        android:id="@+id/button4Points"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Почти да (4 очка)"
+        android:layout_marginBottom="8dp" />
 
-        <Button
-            android:id="@+id/button14"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="иногда" />
+    <Button
+        android:id="@+id/button3Points"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Иногда (3 очка)"
+        android:layout_marginBottom="8dp" />
 
-        <Button
-            android:id="@+id/button15"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="редко" />
+    <Button
+        android:id="@+id/button2Points"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Редко (2 очка)"
+        android:layout_marginBottom="8dp" />
 
-        <Button
-            android:id="@+id/button16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="никогда" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/button1Point"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Никогда (1 очко)"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Текст с текущим счётом -->
+    <TextView
+        android:id="@+id/scoreTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Счёт: 0"
+        android:textSize="16sp" />
+</LinearLayout>
 </FrameLayout>

@@ -7,23 +7,46 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/button10"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/question"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_weight="1"
-            android:text="да" />
+            android:layout_marginVertical="20dp"
+            android:textSize="16sp"
+            android:text="вопрос"/>
 
-        <Button
-            android:id="@+id/button11"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_weight="1"
-            android:text="нет" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/yesbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="20sp"
+                android:text="Да" />
+
+            <Button
+                android:id="@+id/notbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="20sp"
+                android:text="Нет" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/resultest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textSize="16sp"
+            android:text="Результат будет здесь" />
     </LinearLayout>
+
 </FrameLayout>

@@ -8,30 +8,50 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <Button
-            android:id="@+id/button17"
+        <TextView
+            android:id="@+id/questionTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="да" />
+            android:text="Вопрос"
+            android:textSize="18sp"
+            android:paddingBottom="16dp" />
 
         <Button
-            android:id="@+id/button18"
+            android:id="@+id/buttonYes4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="иногда" />
+            android:text="Да (1)"
+            android:layout_marginBottom="8dp" />
 
         <Button
-            android:id="@+id/button19"
+            android:id="@+id/buttonSometimes4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Редко" />
+            android:text="Иногда (2)"
+            android:layout_marginBottom="8dp" />
 
         <Button
-            android:id="@+id/button20"
+            android:id="@+id/buttonRarely4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="я гей" />
+            android:text="Редко (3)"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/buttonNever4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Никогда (4)"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:id="@+id/scoreTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Результат: 0"
+            android:textSize="16sp" />
     </LinearLayout>
 </FrameLayout>
