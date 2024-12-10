@@ -11,6 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.List;
 
 
@@ -23,18 +29,22 @@ public class fiveresult extends Fragment {
 
     private TextView questionTextView; // Поле для вопроса
     private TextView scoreTextView; // Поле для текущего счёта
-    private Button button5Points; // Кнопка "Да" (5 очков)
-    private Button button4Points; // Кнопка "Почти да" (4 очка)
-    private Button button3Points; // Кнопка "Иногда" (3 очка)
-    private Button button2Points; // Кнопка "Редко" (2 очка)
-    private Button button1Point; // Кнопка "Никогда" (1 очко)
+    private Button button5Points, button4Points, button3Points, button2Points, button1Point; // Кнопки ответов
+
+    private DatabaseReference databaseReference;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser currentUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Инициализация макета фрагмента
         View view = inflater.inflate(R.layout.fragment_fiveresult, container, false);
 
-        // Находим элементы интерфейса фрагмента
+        // Firebase
+        firebaseAuth = FirebaseAuth.getInstance();
+        currentUser = firebaseAuth.getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Results");
+
+        // Находим элементы интерфейса
         questionTextView = view.findViewById(R.id.questionTextView);
         scoreTextView = view.findViewById(R.id.scoreTextView);
         button5Points = view.findViewById(R.id.button5Points);
@@ -61,11 +71,6 @@ public class fiveresult extends Fragment {
         return view;
     }
 
-    // Метод для передачи списка вопросов в фрагмент
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
-    }
-    // Метод для обработки ответа
     private void handleAnswer(int score) {
         if (!isTestFinished) {
             totalScore += score;
@@ -73,42 +78,54 @@ public class fiveresult extends Fragment {
         }
     }
 
-    // Метод для отображения текущего вопрос
-
     private void displayQuestion() {
         if (questions == null || currentQuestionIndex >= questions.size()) {
-            Log.d("FiveResultFragment", "Список вопросов пуст или индекс за пределами списка");
             finishTest();
             return;
         }
 
-        // Отображаем текущий вопрос
         Question currentQuestion = questions.get(currentQuestionIndex);
-        if (currentQuestion != null) {
-            questionTextView.setText(currentQuestion.getText());
-        } else {
-            Log.d("FiveResultFragment", "Текущий вопрос равен null");
-            finishTest();
-        }
+        questionTextView.setText(currentQuestion.getText());
     }
 
-
-    // Метод для перехода к следующему вопросу
     private void nextQuestion() {
         currentQuestionIndex++;
         if (currentQuestionIndex < questions.size()) {
-            // Отображаем следующий вопрос
             displayQuestion();
         } else {
-            // Если вопросы закончились, завершаем тест
             finishTest();
         }
     }
 
-    // Метод для завершения теста
     private void finishTest() {
-        isTestFinished = true; // Устанавливаем флаг завершения
+        isTestFinished = true;
         questionTextView.setText("Тест завершён");
         scoreTextView.setText("Ваш итоговый счёт: " + totalScore);
+
+        // Проверяем авторизацию пользователя
+        if (currentUser == null) {
+            Log.e("Firebase", "currentUser is null. User is not authenticated.");
+            return;
+        }
+
+        String userId = currentUser.getUid();
+        String testName = "Тест_ПятьБаллов"; // Уникальное имя теста
+        TestResult newResult = new TestResult(testName, totalScore);
+
+        // Сохраняем результаты
+        databaseReference.child(userId).child(testName).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DataSnapshot snapshot = task.getResult();
+
+                TestResult lastResult = snapshot.child("lastResult").getValue(TestResult.class);
+
+                databaseReference.child(userId).child(testName).child("previousResult").setValue(lastResult);
+                databaseReference.child(userId).child(testName).child("lastResult").setValue(newResult)
+                        .addOnSuccessListener(aVoid -> Log.d("Firebase", "Test result saved successfully"))
+                        .addOnFailureListener(e -> Log.e("Firebase", "Failed to save test result", e));
+            } else {
+                Log.e("Firebase", "Failed to fetch current results", task.getException());
+            }
+        });
     }
 }

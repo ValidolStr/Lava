@@ -5,12 +5,19 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -26,10 +33,18 @@ public class sickbar extends Fragment {
     private SeekBar seekBar; // Слайдер для выбора ответа
     private Button submitButton; // Кнопка для подтверждения ответа
 
-    @SuppressLint("MissingInflatedId")
+    private DatabaseReference databaseReference;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser currentUser;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sickbar, container, false);
+
+        // Firebase
+        firebaseAuth = FirebaseAuth.getInstance();
+        currentUser = firebaseAuth.getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Results");
 
         // Находим элементы интерфейса
         questionTextView = view.findViewById(R.id.questionTextView);
@@ -84,5 +99,33 @@ public class sickbar extends Fragment {
         isTestFinished = true;
         questionTextView.setText("Тест завершён");
         scoreTextView.setText("Ваш результат: " + totalScore);
+
+        // Проверяем авторизацию пользователя
+        if (currentUser == null) {
+            Log.e("Firebase", "currentUser is null. User is not authenticated.");
+            return;
+        }
+
+        String userId = currentUser.getUid();
+        String testName = "Тест_Шкала депрессии"; // Уникальное имя теста
+        TestResult newResult = new TestResult(testName, totalScore);
+
+        // Сохраняем результаты для конкретного теста
+        databaseReference.child(userId).child(testName).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DataSnapshot snapshot = task.getResult();
+
+                // Получаем текущий previousResult
+                TestResult lastResult = snapshot.child("lastResult").getValue(TestResult.class);
+
+                // Сохраняем новый результат и сдвигаем предыдущий
+                databaseReference.child(userId).child(testName).child("previousResult").setValue(lastResult);
+                databaseReference.child(userId).child(testName).child("lastResult").setValue(newResult)
+                        .addOnSuccessListener(aVoid -> Log.d("Firebase", "Test result saved successfully"))
+                        .addOnFailureListener(e -> Log.e("Firebase", "Failed to save test result", e));
+            } else {
+                Log.e("Firebase", "Failed to fetch current results", task.getException());
+            }
+        });
     }
 }

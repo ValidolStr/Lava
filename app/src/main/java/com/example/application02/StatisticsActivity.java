@@ -1,42 +1,42 @@
 package com.example.application02;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
+import android.view.Gravity;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class StatisticsActivity extends AppCompatActivity {
+
+    private TableLayout tableLayout;
+
     private DatabaseReference databaseReference;
-    private   FirebaseAuth firebaseAuth;
+    private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
-    private  List<TestResult> testResults = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_statistics);
 
-
+        tableLayout = findViewById(R.id.tableLayout);
 
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
@@ -44,61 +44,81 @@ public class StatisticsActivity extends AppCompatActivity {
 
         if (currentUser != null) {
             String userId = currentUser.getUid();
+
+            // Загружаем результаты для всех тестов
             databaseReference.child(userId).addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    testResults.clear();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        TestResult result = snapshot.getValue(TestResult.class);
-                        if (result != null) {
-                            testResults.add(result);
-                        }
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    tableLayout.removeAllViews(); // Очищаем таблицу перед заполнением
+
+                    // Добавляем заголовок таблицы
+                    addTableHeader();
+
+                    for (DataSnapshot testSnapshot : dataSnapshot.getChildren()) {
+                        String testName = testSnapshot.getKey();
+                        TestResult previousResult = testSnapshot.child("previousResult").getValue(TestResult.class);
+                        TestResult lastResult = testSnapshot.child("lastResult").getValue(TestResult.class);
+
+                        // Добавляем строку с результатами для каждого теста
+                        addTableRow(testName, previousResult, lastResult);
                     }
-                    displayStatistics();
                 }
 
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    // Обработка ошибок
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.e("Firebase", "Failed to load test results", databaseError.toException());
                 }
             });
         }
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-    }
-    private void displayStatistics() {
-        // Пример: используем TextView для отображения статистики
-        TextView statisticsTextView = findViewById(R.id.statistics);
-
-        StringBuilder statistics = new StringBuilder();
-        statistics.append("Название тестов:\n");
-        for (TestResult result : testResults) {
-            statistics.append(result.getTestName()).append("\n");
-        }
-
-        statistics.append("\nПоследние результаты:\n");
-        for (TestResult result : testResults) {
-            statistics.append(result.getScore()).append("\n");
-        }
-
-        // Динамика
-        statistics.append("\nДинамика:\n");
-        for (int i = 1; i < testResults.size(); i++) {
-            int previousScore = testResults.get(i - 1).getScore();
-            int currentScore = testResults.get(i).getScore();
-            String trend = currentScore > previousScore ? "Улучшение" : "Ухудшение";
-            statistics.append(trend).append("\n");
-        }
-
-        statisticsTextView.setText(statistics.toString());
     }
 
-    public void Jamptoback (View v) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+    // Метод для добавления заголовка таблицы
+    private void addTableHeader() {
+        TableRow headerRow = new TableRow(this);
+
+        TextView testColumn = createTextView("Тест");
+        TextView previousResultColumn = createTextView("Предыдущий результат");
+        TextView lastResultColumn = createTextView("Нынешний результат");
+        TextView dynamicColumn = createTextView("Динамика");
+
+        headerRow.addView(testColumn);
+        headerRow.addView(previousResultColumn);
+        headerRow.addView(lastResultColumn);
+        headerRow.addView(dynamicColumn);
+
+        tableLayout.addView(headerRow);
+    }
+
+    // Метод для добавления строки с результатами
+    private void addTableRow(String testName, TestResult previousResult, TestResult lastResult) {
+        TableRow row = new TableRow(this);
+
+        TextView testNameView = createTextView(testName);
+        TextView previousResultView = createTextView(previousResult != null ? String.valueOf(previousResult.getScore()) : "-");
+        TextView lastResultView = createTextView(lastResult != null ? String.valueOf(lastResult.getScore()) : "-");
+
+        // Рассчитываем динамику
+        String dynamic = "-";
+        if (previousResult != null && lastResult != null) {
+            int diff = lastResult.getScore() - previousResult.getScore();
+            dynamic = diff > 0 ? "+" + diff : String.valueOf(diff);
+        }
+        TextView dynamicView = createTextView(dynamic);
+
+        row.addView(testNameView);
+        row.addView(previousResultView);
+        row.addView(lastResultView);
+        row.addView(dynamicView);
+
+        tableLayout.addView(row);
+    }
+
+    // Вспомогательный метод для создания текстового поля
+    private TextView createTextView(String text) {
+        TextView textView = new TextView(this);
+        textView.setText(text);
+        textView.setPadding(8, 8, 8, 8);
+        textView.setGravity(Gravity.CENTER);
+        return textView;
     }
 }
