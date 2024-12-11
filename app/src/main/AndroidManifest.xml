@@ -13,17 +13,20 @@
         android:theme="@style/Theme.Psihologi"
         tools:targetApi="31">
         <activity
-            android:name=".TestForm"
+            android:name=".tecnics.tecnicsfragment"
             android:exported="false" />
         <activity
-            android:name=".TestingActivity"
+            android:name=".TEST.TestForm"
+            android:exported="false" />
+        <activity
+            android:name=".TEST.TestingActivity"
             android:exported="false"
             android:theme="@style/Theme.Psihologi" />
         <activity
             android:name=".StatisticsActivity"
             android:exported="false" />
         <activity
-            android:name=".TeknicsActivity"
+            android:name=".tecnics.TeknicsActivity"
             android:exported="false" />
         <activity
             android:name=".MetaforikActivity"

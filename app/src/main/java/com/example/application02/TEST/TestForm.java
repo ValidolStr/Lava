@@ -1,4 +1,4 @@
-package com.example.application02;
+package com.example.application02.TEST;
 
 import android.os.Bundle;
 import android.widget.FrameLayout;
@@ -10,6 +10,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.application02.R;
 
 import java.util.ArrayList;
 import java.util.List;

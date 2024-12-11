@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Поле для ввода проблемы -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Опишите проблему"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/problemEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Введите проблему"
+        android:minHeight="48dp" />
+
+    <!-- Поле для ввода ответа -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Почему это произошло?"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/answerEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Введите ответ"
+        android:minHeight="48dp" />
+
+    <!-- Кнопка подтверждения -->
+    <Button
+        android:id="@+id/confirmButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Подтвердить"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Кнопка "Проблема решена?" -->
+    <Button
+        android:id="@+id/solvedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Проблема решена?"
+        android:visibility="gone"
+        android:layout_marginTop="16dp" />
+</LinearLayout>

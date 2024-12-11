@@ -1,6 +1,5 @@
-package com.example.application02;
+package com.example.application02.TEST;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,9 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.example.application02.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -21,7 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
-public class sickbar extends Fragment {
+public class fourresult extends Fragment {
 
     private List<Question> questions; // Список вопросов
     private int currentQuestionIndex = 0; // Индекс текущего вопроса
@@ -29,9 +28,8 @@ public class sickbar extends Fragment {
     private boolean isTestFinished = false; // Флаг завершения теста
 
     private TextView questionTextView; // Поле для вопроса
-    private TextView scoreTextView; // Поле для текущего счёта
-    private SeekBar seekBar; // Слайдер для выбора ответа
-    private Button submitButton; // Кнопка для подтверждения ответа
+    private TextView scoreTextView; // Поле для счёта
+    private Button buttonYes, buttonSometimes, buttonRarely, buttonNever; // Кнопки ответов
 
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
@@ -39,7 +37,7 @@ public class sickbar extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_sickbar, container, false);
+        View view = inflater.inflate(R.layout.fragment_fourresult, container, false);
 
         // Firebase
         firebaseAuth = FirebaseAuth.getInstance();
@@ -49,14 +47,16 @@ public class sickbar extends Fragment {
         // Находим элементы интерфейса
         questionTextView = view.findViewById(R.id.questionTextView);
         scoreTextView = view.findViewById(R.id.scoreTextView);
-        seekBar = view.findViewById(R.id.seekBar);
-        submitButton = view.findViewById(R.id.submitButtonsic);
+        buttonYes = view.findViewById(R.id.buttonYes4);
+        buttonSometimes = view.findViewById(R.id.buttonSometimes4);
+        buttonRarely = view.findViewById(R.id.buttonRarely4);
+        buttonNever = view.findViewById(R.id.buttonNever4);
 
-        // Устанавливаем начальное значение слайдера
-        seekBar.setProgress(0);
-
-        // Устанавливаем обработчик кнопки
-        submitButton.setOnClickListener(v -> handleAnswer(seekBar.getProgress() + 1));
+        // Устанавливаем обработчики кнопок
+        buttonYes.setOnClickListener(v -> handleAnswer(4));
+        buttonSometimes.setOnClickListener(v -> handleAnswer(3));
+        buttonRarely.setOnClickListener(v -> handleAnswer(2));
+        buttonNever.setOnClickListener(v -> handleAnswer(1));
 
         // Получаем список вопросов из аргументов
         if (getArguments() != null) {
@@ -98,7 +98,7 @@ public class sickbar extends Fragment {
     private void finishTest() {
         isTestFinished = true;
         questionTextView.setText("Тест завершён");
-        scoreTextView.setText("Ваш результат: " + totalScore);
+        scoreTextView.setText("Ваш итоговый счёт: " + totalScore);
 
         // Проверяем авторизацию пользователя
         if (currentUser == null) {
@@ -107,18 +107,16 @@ public class sickbar extends Fragment {
         }
 
         String userId = currentUser.getUid();
-        String testName = "Тест_Шкала депрессии"; // Уникальное имя теста
+        String testName = "Тест_ЧетыреОтвета"; // Уникальное имя теста
         TestResult newResult = new TestResult(testName, totalScore);
 
-        // Сохраняем результаты для конкретного теста
+        // Сохраняем результаты
         databaseReference.child(userId).child(testName).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DataSnapshot snapshot = task.getResult();
 
-                // Получаем текущий previousResult
                 TestResult lastResult = snapshot.child("lastResult").getValue(TestResult.class);
 
-                // Сохраняем новый результат и сдвигаем предыдущий
                 databaseReference.child(userId).child(testName).child("previousResult").setValue(lastResult);
                 databaseReference.child(userId).child(testName).child("lastResult").setValue(newResult)
                         .addOnSuccessListener(aVoid -> Log.d("Firebase", "Test result saved successfully"))

@@ -1,4 +1,4 @@
-package com.example.application02;
+package com.example.application02.TEST;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,17 +12,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 //import androidx.core.view.WindowInsetsCompat.Insets;
 
-import com.example.application02.Test;
+import com.example.application02.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import com.example.application02.YesNoTest;
-import com.example.application02.RatingTest;
-import com.example.application02.SingleChoiceTest;
-import com.example.application02.MultipleChoiceTest;
 
 import java.util.ArrayList;
 import java.util.List;

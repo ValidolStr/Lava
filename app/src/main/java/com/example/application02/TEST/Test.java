@@ -1,4 +1,4 @@
-package com.example.application02;
+package com.example.application02.TEST;
 
 import java.util.List;
 import android.os.Parcel;

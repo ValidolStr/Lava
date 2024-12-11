@@ -1,4 +1,4 @@
-package com.example.application02;
+package com.example.application02.TEST;
 
 
 import android.annotation.SuppressLint;
@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.application02.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
