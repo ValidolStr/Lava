@@ -1,9 +1,7 @@
 package com.example.application02.tecnics;
 
+import android.content.Context;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +9,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.application02.R;
 
 public class timetosquere extends Fragment {
-
     private TextView timerTextView;
     private TextView actionTextView;
     private Button toggleButton;
     private CountDownTimer countDownTimer;
+    private SquareView squareView;
 
     // Этапы дыхательной практики
     private String[] actions = {
@@ -40,6 +40,7 @@ public class timetosquere extends Fragment {
         timerTextView = view.findViewById(R.id.timerTextView);
         actionTextView = view.findViewById(R.id.actionTextView);
         toggleButton = view.findViewById(R.id.toggleButton);
+        squareView = view.findViewById(R.id.squareView); // Инициализация кастомного View
 
         // Устанавливаем обработчик для кнопки
         toggleButton.setOnClickListener(v -> {
@@ -68,6 +69,7 @@ public class timetosquere extends Fragment {
         if (countDownTimer != null) {
             countDownTimer.cancel(); // Останавливаем текущий таймер
         }
+        squareView.reset(); // Сбрасываем визуализацию квадрата
     }
 
     private void runBreathingCycle() {
@@ -75,6 +77,9 @@ public class timetosquere extends Fragment {
 
         // Устанавливаем действие на основе текущего этапа
         actionTextView.setText(actions[actionIndex]);
+
+        // Обновляем визуализацию квадрата
+        squareView.updateProgress(actionIndex);
 
         // Таймер на 3 секунды для каждого этапа
         countDownTimer = new CountDownTimer(3000, 1000) {

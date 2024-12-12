@@ -28,6 +28,13 @@
         android:gravity="center"
         android:layout_marginBottom="24dp" />
 
+    <!-- Кастомное View для квадрата -->
+    <com.example.application02.tecnics.SquareView
+        android:id="@+id/squareView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginBottom="24dp" />
+
     <!-- Кнопка для управления практикой -->
     <Button
         android:id="@+id/toggleButton"
