@@ -1,67 +1,75 @@
-<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".TEST.fiveresult">
-
-<LinearLayout
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    tools:context=".TEST.fiveresult">
 
-    <!-- Текст с текущим вопросом -->
-    <TextView
-        android:id="@+id/questionTextView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Вопрос"
-        android:textSize="18sp"
-        android:layout_marginBottom="16dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <!-- Кнопки для выбора ответа -->
-    <Button
-        android:id="@+id/button5Points"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Да (5 очков)"
-        android:layout_marginBottom="8dp" />
+        <!-- Поле для вопроса -->
+        <TextView
+            android:id="@+id/questionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:background="#EEEEEE"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:scrollbars="vertical"
+            android:maxLines="5"
+            android:ellipsize="end"
+            android:text="Вопрос будет здесь" />
 
-    <Button
-        android:id="@+id/button4Points"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Почти да (4 очка)"
-        android:layout_marginBottom="8dp" />
+        <!-- Кнопки для выбора ответа -->
+        <Button
+            android:id="@+id/button5Points"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Очень часто" />
 
-    <Button
-        android:id="@+id/button3Points"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Иногда (3 очка)"
-        android:layout_marginBottom="8dp" />
+        <Button
+            android:id="@+id/button4Points"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Часто" />
 
-    <Button
-        android:id="@+id/button2Points"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Редко (2 очка)"
-        android:layout_marginBottom="8dp" />
+        <Button
+            android:id="@+id/button3Points"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Иногда" />
 
-    <Button
-        android:id="@+id/button1Point"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Никогда (1 очко)"
-        android:layout_marginBottom="16dp" />
+        <Button
+            android:id="@+id/button2Points"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Редко " />
 
-    <!-- Текст с текущим счётом -->
-    <TextView
-        android:id="@+id/scoreTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Счёт: 0"
-        android:textSize="16sp" />
-</LinearLayout>
+        <Button
+            android:id="@+id/button1Point"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Никогда " />
+
+        <!-- Кнопка для результата -->
+        <Button
+            android:id="@+id/resultbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="Результат"
+            android:visibility="gone" />
+
+    </LinearLayout>
 </FrameLayout>

@@ -1,8 +1,14 @@
 package com.example.application02;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +28,7 @@ public class MetaforikActivity extends AppCompatActivity {
     private Set<String> currentMainImages;
     private Set<String> currentSecondImages;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +45,12 @@ public class MetaforikActivity extends AppCompatActivity {
         randomSecond = new Random();
         currentMainImages = new HashSet<>();
         currentSecondImages = new HashSet<>();
+
+        Button infobtn = findViewById(R.id.infobtn);
+
+        // Привязываем обработчик нажатия
+        infobtn .setOnClickListener(v -> showMessageBox());
+
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             androidx.core.graphics.Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -103,4 +116,26 @@ public class MetaforikActivity extends AppCompatActivity {
         int resId = getResources().getIdentifier(imageName, "drawable", getPackageName());
         imageView.setImageResource(resId);
     }
+    public void showMessageBox() {
+        // Создаём диалог
+        new AlertDialog.Builder(this)
+                .setTitle("Инструкция") // Заголовок
+                .setMessage("Внимательно посмотри на каждую из трёх карт по очереди и ответь на вопросы:\n\n" +
+                        "1. Что ты на ней видишь?\n" +
+                        "2. Какое настроение у карты?\n" +
+                        "3. Какие чувства и эмоции она вызывает?\n" +
+                        "4. Нравится ли она тебе?\n" +
+                        "5. Что на ней происходит?\n" +
+                        "6. Как она отражает решение твоей проблемы?\n" +
+                        "7. Что тебе необходимо сделать, чтобы она решилась?")
+                .setPositiveButton("Понятно", (dialog, which) -> {
+                    // Действие при нажатии на кнопку "Понятно" (закрыть диалог)
+                    dialog.dismiss();
+                })
+                .setCancelable(true) // Разрешить закрытие диалога по нажатию вне его
+                .show();
+    }
+
+
+
 }

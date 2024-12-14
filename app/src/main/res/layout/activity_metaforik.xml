@@ -10,13 +10,12 @@
     tools:layout_editor_absoluteY="24dp">
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/infobtn"
         android:layout_width="250sp"
         android:layout_height="60sp"
         android:layout_marginBottom="56dp"
         android:fontFamily="casual"
-        android:onClick="svichCart"
-        android:text="@string/rassifrov"
+        android:text="@string/informat"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,7 +28,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintBottom_toTopOf="@+id/infobtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
@@ -52,7 +51,7 @@
             android:layout_height="127dp"
             android:layout_marginBottom="10dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/button5"
+            app:layout_constraintBottom_toTopOf="@+id/infobtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="VisualLintBounds">
@@ -64,7 +63,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/Carts"
                 android:onClick="svichCart"
-                tools:ignore="ImageContrastCheck,DuplicateSpeakableTextCheck" />
+                android:background="#27FFFFFF" /> <!-- Светлый фон с прозрачностью -->
 
             <ImageView
                 android:id="@+id/secondimg2"
@@ -73,7 +72,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/Carts"
                 android:onClick="svichCart"
-                tools:ignore="ImageContrastCheck" />
+                android:background="#27FFFFFF" /> <!-- Светлый фон с прозрачностью -->
 
             <ImageView
                 android:id="@+id/secondimg3"
@@ -82,7 +81,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/Carts"
                 android:onClick="svichCart"
-                tools:ignore="ImageContrastCheck" />
+                android:background="#27FFFFFF" /> <!-- Светлый фон с прозрачностью -->
         </LinearLayout>
     </FrameLayout>
 
@@ -116,11 +115,8 @@
             android:contentDescription="@string/Carts"
             android:onClick="svichCart"
             android:scaleType="fitXY"
-            tools:ignore="ImageContrastCheck,DuplicateSpeakableTextCheck,VisualLintBounds" />
-
-
+            android:background="#27FFFFFF"  /> <!-- Применяем рамку -->
     </FrameLayout>
-
 
     <TextView
         android:id="@+id/metastart"
@@ -149,7 +145,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.36"
-        app:layout_constraintStart_toEndOf="@+id/button5"
+        app:layout_constraintStart_toEndOf="@+id/infobtn"
         app:srcCompat="@android:drawable/ic_menu_revert" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

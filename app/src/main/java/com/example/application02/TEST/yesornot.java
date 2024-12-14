@@ -1,6 +1,5 @@
 package com.example.application02.TEST;
 
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
@@ -12,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.application02.R;
 import com.google.firebase.database.DataSnapshot;
@@ -30,9 +30,9 @@ public class yesornot extends Fragment {
     private boolean isTestFinished = false; // Флаг завершения теста
 
     private TextView questionTextView; // Поле для вопроса
-    private TextView scoreTextView; // Поле для текущего счёта
     private Button yesButton; // Кнопка "Да"
     private Button noButton; // Кнопка "Нет"
+    private Button resultButton; // Кнопка для отображения результата
 
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
@@ -50,13 +50,17 @@ public class yesornot extends Fragment {
 
         // Находим элементы интерфейса
         questionTextView = view.findViewById(R.id.questionTextView);
-        scoreTextView = view.findViewById(R.id.resultest);
         yesButton = view.findViewById(R.id.yesbtn);
         noButton = view.findViewById(R.id.notbtn);
+        resultButton = view.findViewById(R.id.resultbtn); // Кнопка результата
+
+        // Кнопка результата изначально невидима
+        resultButton.setVisibility(View.GONE);
 
         // Устанавливаем обработчики кнопок
         yesButton.setOnClickListener(v -> handleAnswer(1)); // "Да" добавляет 1 балл
         noButton.setOnClickListener(v -> handleAnswer(0)); // "Нет" добавляет 0 баллов
+        resultButton.setOnClickListener(v -> showResult()); // По нажатию выводим результат
 
         // Получаем список вопросов из аргументов
         if (getArguments() != null) {
@@ -98,9 +102,19 @@ public class yesornot extends Fragment {
     private void finishTest() {
         isTestFinished = true;
         questionTextView.setText("Тест завершён");
-        scoreTextView.setText("Вы ответили 'Да' на " + yesCount + " вопросов.");
 
-        // Проверяем авторизацию пользователя
+        // Скрываем кнопки "Да" и "Нет"
+        yesButton.setVisibility(View.GONE);
+        noButton.setVisibility(View.GONE);
+
+        // Показываем кнопку результата
+        resultButton.setVisibility(View.VISIBLE);
+
+        // Сохраняем результаты в Firebase
+        saveResultsToFirebase();
+    }
+
+    private void saveResultsToFirebase() {
         if (currentUser == null) {
             Log.e("Firebase", "currentUser is null. User is not authenticated.");
             return;
@@ -110,7 +124,6 @@ public class yesornot extends Fragment {
         String testName = "Тест_ДаНет"; // Уникальное имя теста
         TestResult newResult = new TestResult(testName, yesCount);
 
-        // Сохраняем результаты
         databaseReference.child(userId).child(testName).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DataSnapshot snapshot = task.getResult();
@@ -125,5 +138,23 @@ public class yesornot extends Fragment {
                 Log.e("Firebase", "Failed to fetch current results", task.getException());
             }
         });
+    }
+
+    private void showResult() {
+        String recommendation;
+
+        // Интерпретация уровней
+        if (yesCount >= 20) {
+            recommendation = "Высокий уровень невротизации: выраженная эмоциональная возбудимость, тревожность, напряжённость, беспокойство.";
+        } else if (yesCount >= 10) {
+            recommendation = "Средний уровень невротизации: умеренная эмоциональная устойчивость, возможны временные проявления напряжённости.";
+        } else {
+            recommendation = "Низкий уровень невротизации: эмоциональная устойчивость, спокойствие, оптимизм.";
+        }
+
+        String resultMessage = "Вы ответили 'Да' на " + yesCount + " вопросов.\n" + recommendation;
+
+        // Отображаем результат в Toast
+        Toast.makeText(getContext(), resultMessage, Toast.LENGTH_LONG).show();
     }
 }

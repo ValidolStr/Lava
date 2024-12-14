@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TEST.sickbar">
+    tools:context=".TEST.fourresult">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,33 +11,75 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- Поле для вопроса -->
         <TextView
             android:id="@+id/questionTextView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Вопрос"
-            android:textSize="18sp"
-            android:paddingBottom="16dp" />
+            android:layout_height="150dp"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:background="#EEEEEE"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:scrollbars="vertical"
+            android:maxLines="5"
+            android:ellipsize="end"
+            android:text="Вопрос будет здесь" />
 
-        <SeekBar
-            android:id="@+id/seekBar"
+        <!-- Кнопки для выбора ответа -->
+        <Button
+            android:id="@+id/buttonYes4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:max="6" />
+            android:layout_marginBottom="8dp"
+            android:text="Никогда или изредка" />
 
         <Button
-            android:id="@+id/submitButtonsic"
+            android:id="@+id/buttonSometimes4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ответить"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="8dp"
+            android:text="Иногда" />
+
+        <Button
+            android:id="@+id/buttonRarely4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Часто" />
+
+        <Button
+            android:id="@+id/buttonNever4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Почти всегда или постоянно" />
+
 
         <TextView
-            android:id="@+id/scoreTextView"
+            android:id="@+id/resultTextView"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginVertical="20dp"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:background="#EEEEEE"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:scrollbars="vertical"
+            android:maxLines="5"
+            android:ellipsize="end"
+            android:scrollHorizontally="false"
+            android:visibility="gone" /> <!-- Initially hidden -->
+
+        <!-- Кнопка для результата -->
+        <Button
+            android:id="@+id/buttonResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Результат: 0"
-            android:textSize="16sp" />
+            android:text="Результат"
+            android:layout_marginTop="16dp"
+            android:visibility="gone" /> <!-- Initially hidden -->
+
     </LinearLayout>
 </FrameLayout>

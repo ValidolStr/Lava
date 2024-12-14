@@ -197,5 +197,6 @@ class Question implements Parcelable {
             return new Question[size];
         }
     };
+
 }
 
