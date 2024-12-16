@@ -15,10 +15,9 @@
         android:layout_marginTop="32dp"
         android:background="@drawable/cloud"
         android:fontFamily="casual"
-        android:outlineAmbientShadowColor="@color/people"
+        android:textColor="@color/colorText2Primary"
         android:text="@string/logo"
         android:textAlignment="center"
-        android:textColor="@color/sinij"
         android:textSize="70sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +40,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        style="@style/AppTheme"/>
 
     <Button
         android:id="@+id/button2"
@@ -56,7 +56,8 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button"
-        tools:ignore="TextSizeCheck" />
+        tools:ignore="TextSizeCheck"
+        style="@style/AppTheme" />
 
     <Button
         android:id="@+id/button3"
@@ -70,7 +71,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/button2"
+        style="@style/AppTheme"/>
 
     <Button
         android:id="@+id/button4"
@@ -84,6 +86,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
+        app:layout_constraintTop_toBottomOf="@+id/button3"
+        style="@style/AppTheme"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

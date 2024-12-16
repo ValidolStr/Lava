@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".TEST.TestForm">
+    tools:context=".TEST.TestForm"
+    style="@style/AppTheme">
 
     <FrameLayout
         android:id="@+id/frameLayout"

@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     tools:context=".MetaforikActivity"
-    tools:layout_editor_absoluteY="24dp">
+    tools:layout_editor_absoluteY="24dp"
+    style="@style/AppTheme">
 
     <Button
         android:id="@+id/infobtn"
@@ -20,7 +21,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="DuplicateSpeakableTextCheck,TextSizeCheck" />
+        tools:ignore="DuplicateSpeakableTextCheck,TextSizeCheck"
+        style="@style/AppTheme"/>
 
     <FrameLayout
         android:layout_width="373dp"

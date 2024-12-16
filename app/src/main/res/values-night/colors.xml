@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Основной цвет -->
+    <color name="colorPrimary">#4B0082</color>
+    <color name="colorPrimaryVariant">#6A0DAD</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+
+    <!-- Цвет фона -->
+    <color name="colorBackground">#121212</color>
+    <color name="colorOnBackground">#FFFFFF</color>
+
+    <!-- Цвет текста -->
+    <color name="colorTextPrimary">#FFFFFF</color>
+    <color name="colorTextSecondary">#B3B3B3</color>
+
+    <!-- Цвет кнопок -->
+    <color name="colorButton">#4B0082</color>
+    <color name="colorOnButton">#FFFFFF</color>
+</resources>

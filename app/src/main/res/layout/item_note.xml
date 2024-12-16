@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="8dp"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    style="@style/AppTheme">
 
     <!-- Название заметки -->
     <TextView
@@ -24,7 +27,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_delete"
         android:contentDescription="Удалить"
-        android:tint="@color/blue" />
+        android:src="@drawable/ic_delete"
+        app:tint="@color/colorText2Primary"
+        tools:ignore="TouchTargetSizeCheck" />
 </LinearLayout>
