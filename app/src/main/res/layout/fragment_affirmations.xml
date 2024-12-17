@@ -6,8 +6,7 @@
     tools:context=".tecnics.AffirmationsFragment"
     style="@style/AppTheme"
     android:background="@drawable/background"
-    android:layout_gravity="center"
-    >
+    android:layout_gravity="center">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,6 +31,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Получить аффирмацию" />
+
+        <!-- Новая кнопка для инструкции -->
+        <Button
+            android:id="@+id/instruction_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Показать инструкцию"
+            android:layout_marginTop="16dp" />
 
     </LinearLayout>
 </FrameLayout>

@@ -6,15 +6,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.app.AlertDialog;
 
 import com.example.application02.R;
 
@@ -73,6 +72,7 @@ public class AffirmationsFragment extends Fragment {
 
         affirmationTextView = view.findViewById(R.id.affirmation_text);
         Button getAffirmationButton = view.findViewById(R.id.get_affirmation_button);
+        Button instructionButton = view.findViewById(R.id.instruction_button); // Новая кнопка для инструкции
 
         // Load and display the current affirmation
         loadCurrentAffirmation();
@@ -89,6 +89,9 @@ public class AffirmationsFragment extends Fragment {
             saveCurrentAffirmation(newAffirmation);
             affirmationTextView.setText(newAffirmation);
         });
+
+        // Обработчик для кнопки инструкции
+        instructionButton.setOnClickListener(v -> showInstructionDialog());
 
         // Schedule daily notification and reset
         scheduleDailyReset();
@@ -172,5 +175,14 @@ public class AffirmationsFragment extends Fragment {
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                     AlarmManager.INTERVAL_DAY, pendingIntent);
         }
+    }
+
+    // Метод для отображения диалога с инструкцией
+    private void showInstructionDialog() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Инструкция")
+                .setMessage("Нажми на кнопку и получите аффирмацию дня, которая поможет тебе начать этот день с хорошим настроением, укрепить уверенность в себе и настроить на позитив.")
+                .setPositiveButton("ОК", null)
+                .show();
     }
 }

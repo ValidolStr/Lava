@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.application02.R;
@@ -17,6 +18,7 @@ public class timetosquere extends Fragment {
     private TextView timerTextView;
     private TextView actionTextView;
     private Button toggleButton;
+    private Button instructionButton; // Новая кнопка для инструкции
     private CountDownTimer countDownTimer;
     private SquareView squareView;
 
@@ -40,9 +42,10 @@ public class timetosquere extends Fragment {
         timerTextView = view.findViewById(R.id.timerTextView);
         actionTextView = view.findViewById(R.id.actionTextView);
         toggleButton = view.findViewById(R.id.toggleButton);
+        instructionButton = view.findViewById(R.id.instructionButton); // Инициализация кнопки
         squareView = view.findViewById(R.id.squareView); // Инициализация кастомного View
 
-        // Устанавливаем обработчик для кнопки
+        // Устанавливаем обработчик для кнопки начала/остановки практики
         toggleButton.setOnClickListener(v -> {
             if (isRunning) {
                 stopBreathingPractice(); // Остановить практику
@@ -51,7 +54,20 @@ public class timetosquere extends Fragment {
             }
         });
 
+        // Устанавливаем обработчик для кнопки инструкции
+        instructionButton.setOnClickListener(v -> showInstructionDialog());
+
         return view;
+    }
+
+    private void showInstructionDialog() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Инструкция")
+                .setMessage("С помощью данного упражнения ты сможешь расслабиться и преодолеть ощущение тревоги. Прими, пожалуйста, удобную позу. Можно включить на фоне расслабляющую музыку для медитаций. " +
+                        "Каждая сторона квадрата – один такт дыхания: вдох, задержка дыхания, выдох, задержка дыхания. Как и стороны квадрата, такты равны: каждый длится по 4 секунды. " +
+                        "Выполняйте данное упражнение несколько раз ежедневно перед сном или в моменты, когда появляется тревога.")
+                .setPositiveButton("ОК", null) // Кнопка для закрытия диалога
+                .show();
     }
 
     private void startBreathingPractice() {

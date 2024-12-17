@@ -1,5 +1,6 @@
 package com.example.application02.tecnics;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -23,7 +24,7 @@ import java.util.List;
 public class FiveStopsFragment extends Fragment {
 
     private EditText problemEditText, answerEditText;
-    private Button confirmButton, solvedButton;
+    private Button confirmButton, solvedButton, instructionButton; // Новая кнопка для инструкции
     private TextView messageTextView;
 
     private String problem; // Проблема
@@ -40,6 +41,7 @@ public class FiveStopsFragment extends Fragment {
         answerEditText = view.findViewById(R.id.answerEditText);
         confirmButton = view.findViewById(R.id.confirmButton);
         solvedButton = view.findViewById(R.id.solvedButton);
+        instructionButton = view.findViewById(R.id.instructionButton); // Инициализация кнопки инструкции
         messageTextView = view.findViewById(R.id.messageTextView);
 
         // Блокировка кнопки подтверждения по умолчанию
@@ -65,6 +67,7 @@ public class FiveStopsFragment extends Fragment {
         // Установка обработчиков кнопок
         confirmButton.setOnClickListener(v -> handleConfirm());
         solvedButton.setOnClickListener(v -> showResults());
+        instructionButton.setOnClickListener(v -> showInstructionDialog()); // Обработчик для кнопки инструкции
 
         return view;
     }
@@ -121,5 +124,18 @@ public class FiveStopsFragment extends Fragment {
         }
 
         setMessage(result.toString());
+    }
+
+    private void showInstructionDialog() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Инструкция")
+                .setMessage("Суть данной техники заключается в последовательном задавании вопроса «почему?» в ответ на каждую из выявленных причин, что позволяет углубиться в проблему и найти её основную причину. \n" +
+                        "Инструкция: \n" +
+                        "ШАГ 1. Определи и четко сформулируй проблему, которую нужно решить.\n" +
+                        "ШАГ 2. Первый «почему?». Спроси себя, почему эта проблема возникла и запиши себе ответ.\n" +
+                        "ШАГ 3. На записанный ответ снова задай вопрос «почему?». \n" +
+                        "ШАГ 4. Повторение: продолжай процесс, спрашивая себя «почему?» на ответ, пока не получится 5 уровней «почему?» или не дойдешь до коренной причины.")
+                .setPositiveButton("ОК", null)
+                .show();
     }
 }

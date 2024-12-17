@@ -45,4 +45,14 @@
         android:text="Начать"
         android:padding="12dp"
         android:textSize="18sp" />
+
+    <!-- Кнопка для показа инструкции -->
+    <Button
+        android:id="@+id/instructionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Инструкция"
+        android:padding="12dp"
+        android:textSize="18sp"
+        android:layout_marginTop="24dp" />
 </LinearLayout>
