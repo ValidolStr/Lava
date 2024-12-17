@@ -1,8 +1,10 @@
 package com.example.application02;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -21,7 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class StatisticsActivity extends AppCompatActivity {
 
-    private TableLayout tableLayout;
+    private TableLayout statisticsTableLayout;
+    private TableLayout dynamicTableLayout;
 
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
@@ -32,31 +35,45 @@ public class StatisticsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
 
-        tableLayout = findViewById(R.id.tableLayout);
+        // Инициализация таблиц
+        statisticsTableLayout = findViewById(R.id.statisticsTableLayout);
+        dynamicTableLayout = findViewById(R.id.dynamicTableLayout);
 
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("Results");
 
+        // Проверяем, что пользователь авторизован
         if (currentUser != null) {
             String userId = currentUser.getUid();
 
-            // Загружаем результаты для всех тестов
+            // Загружаем результаты из Firebase
             databaseReference.child(userId).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    tableLayout.removeAllViews(); // Очищаем таблицу перед заполнением
+                    // Очищаем таблицы перед добавлением новых данных
+                    statisticsTableLayout.removeAllViews();
+                    dynamicTableLayout.removeAllViews();
 
-                    // Добавляем заголовок таблицы
-                    addTableHeader();
+                    // Добавляем заголовки таблиц
+                    addStatisticsHeader();
+                    addDynamicHeader();
 
                     for (DataSnapshot testSnapshot : dataSnapshot.getChildren()) {
                         String testName = testSnapshot.getKey();
                         TestResult previousResult = testSnapshot.child("previousResult").getValue(TestResult.class);
                         TestResult lastResult = testSnapshot.child("lastResult").getValue(TestResult.class);
 
-                        // Добавляем строку с результатами для каждого теста
-                        addTableRow(testName, previousResult, lastResult);
+                        // Логируем данные для отладки
+                        Log.d("Firebase", "Test Name: " + testName);
+                        Log.d("Firebase", "Previous Result: " + (previousResult != null ? previousResult.getScore() : "null"));
+                        Log.d("Firebase", "Last Result: " + (lastResult != null ? lastResult.getScore() : "null"));
+
+                        // Добавляем строку для таблицы статистики
+                        addStatisticsRow(testName, previousResult, lastResult);
+
+                        // Добавляем строку для таблицы динамики
+                        addDynamicRow(testName, previousResult, lastResult);
                     }
                 }
 
@@ -68,53 +85,92 @@ public class StatisticsActivity extends AppCompatActivity {
         }
     }
 
-    // Метод для добавления заголовка таблицы
-    private void addTableHeader() {
+    // Добавление заголовков для таблицы статистики
+    private void addStatisticsHeader() {
         TableRow headerRow = new TableRow(this);
 
-        TextView testColumn = createTextView("Тест");
-        TextView previousResultColumn = createTextView("Предыдущий результат");
-        TextView lastResultColumn = createTextView("Нынешний результат");
-        TextView dynamicColumn = createTextView("Динамика");
+        TextView testColumn = createTextView("Тесты", true);
+        TextView previousResultColumn = createTextView("Предыдущий результат", true);
+        TextView lastResultColumn = createTextView("Нынешний результат", true);
 
         headerRow.addView(testColumn);
         headerRow.addView(previousResultColumn);
         headerRow.addView(lastResultColumn);
-        headerRow.addView(dynamicColumn);
 
-        tableLayout.addView(headerRow);
+        statisticsTableLayout.addView(headerRow);
     }
 
-    // Метод для добавления строки с результатами
-    private void addTableRow(String testName, TestResult previousResult, TestResult lastResult) {
+    // Добавление строки в таблицу статистики
+    private void addStatisticsRow(String testName, TestResult previousResult, TestResult lastResult) {
         TableRow row = new TableRow(this);
 
-        TextView testNameView = createTextView(testName);
-        TextView previousResultView = createTextView(previousResult != null ? String.valueOf(previousResult.getScore()) : "-");
-        TextView lastResultView = createTextView(lastResult != null ? String.valueOf(lastResult.getScore()) : "-");
-
-        // Рассчитываем динамику
-        String dynamic = "-";
-        if (previousResult != null && lastResult != null) {
-            int diff = lastResult.getScore() - previousResult.getScore();
-            dynamic = diff > 0 ? "+" + diff : String.valueOf(diff);
-        }
-        TextView dynamicView = createTextView(dynamic);
+        TextView testNameView = createTextView(testName != null ? testName : "—", false);
+        TextView previousResultView = createTextView(previousResult != null ? String.valueOf(previousResult.getScore()) : "—", false);
+        TextView lastResultView = createTextView(lastResult != null ? String.valueOf(lastResult.getScore()) : "—", false);
 
         row.addView(testNameView);
         row.addView(previousResultView);
         row.addView(lastResultView);
-        row.addView(dynamicView);
 
-        tableLayout.addView(row);
+        statisticsTableLayout.addView(row);
+    }
+
+    // Добавление заголовков для таблицы динамики
+    private void addDynamicHeader() {
+        TableRow headerRow = new TableRow(this);
+
+        TextView testColumn = createTextView("Тесты", true);
+
+        headerRow.addView(testColumn);
+
+        dynamicTableLayout.addView(headerRow);
+    }
+
+    // Добавление строки в таблицу динамики
+    private void addDynamicRow(String testName, TestResult previousResult, TestResult lastResult) {
+        if (testName == null || previousResult == null || lastResult == null) {
+            return; // Если данных нет, пропускаем
+        }
+
+        // Верхняя строка с названием теста
+        TableRow headerRow = new TableRow(this);
+        headerRow.addView(createTextView(testName, true));
+        dynamicTableLayout.addView(headerRow);
+
+        // Нижняя строка с разницей результатов
+        TableRow resultRow = new TableRow(this);
+
+        int previousScore = previousResult.getScore();
+        int lastScore = lastResult.getScore();
+        int difference = lastScore - previousScore;
+
+        TextView differenceView = createTextView(String.valueOf(difference), false);
+        resultRow.addView(differenceView);
+
+        dynamicTableLayout.addView(resultRow);
     }
 
     // Вспомогательный метод для создания текстового поля
-    private TextView createTextView(String text) {
+    private TextView createTextView(String text, boolean isHeader) {
         TextView textView = new TextView(this);
         textView.setText(text);
         textView.setPadding(8, 8, 8, 8);
-        textView.setGravity(Gravity.CENTER);
+        textView.setTypeface(null, isHeader ? Typeface.BOLD : Typeface.NORMAL);
+        textView.setGravity(android.view.Gravity.CENTER);
+        textView.setTextColor(Color.BLACK);
+        // Установка параметров для поддержки переноса текста
+        TableRow.LayoutParams params = new TableRow.LayoutParams(
+                0, // ширина 0dp для использования layout_weight
+                TableRow.LayoutParams.WRAP_CONTENT
+        );
+        params.weight = 1; // равномерное распределение ширины между столбцами
+        textView.setLayoutParams(params);
+
+        // Установка свойств для переноса текста
+        textView.setSingleLine(false); // Разрешить множественные строки
+        textView.setMaxLines(2); // Ограничить количество строк
+        textView.setEllipsize(TextUtils.TruncateAt.END); // Добавить многоточие, если текст длиннее
+
         return textView;
     }
 }

@@ -121,7 +121,7 @@ public class yesornot extends Fragment {
         }
 
         String userId = currentUser.getUid();
-        String testName = "Тест_ДаНет"; // Уникальное имя теста
+        String testName = "Экспрес диагностика невротизации"; // Уникальное имя теста
         TestResult newResult = new TestResult(testName, yesCount);
 
         databaseReference.child(userId).child(testName).get().addOnCompleteListener(task -> {
@@ -154,7 +154,15 @@ public class yesornot extends Fragment {
 
         String resultMessage = "Вы ответили 'Да' на " + yesCount + " вопросов.\n" + recommendation;
 
-        // Отображаем результат в Toast
-        Toast.makeText(getContext(), resultMessage, Toast.LENGTH_LONG).show();
+        // Создаём диалоговое окно
+        new androidx.appcompat.app.AlertDialog.Builder(getContext())
+                .setTitle("Результат теста")
+                .setMessage(resultMessage)
+                .setPositiveButton("OK", (dialog, which) -> {
+                    // Закрываем диалог
+                    dialog.dismiss();
+                })
+                .setCancelable(false) // Диалог нельзя закрыть нажатием вне его
+                .show();
     }
 }

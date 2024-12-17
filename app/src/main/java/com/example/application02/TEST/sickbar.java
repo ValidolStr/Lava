@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
+
 import com.example.application02.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -21,8 +23,8 @@ public class sickbar extends Fragment {
 
     private List<Question> questions;
     private int currentQuestionIndex = 0;
-    private int directScoreSum = 0; // Σпр.
-    private int inverseScoreSum = 0; // Σобр.
+    private int directScoreSum = 0; // Σ прямых вопросов
+    private int inverseScoreSum = 0; // Σ обратных вопросов
     private boolean isTestFinished = false;
 
     private TextView questionTextView;
@@ -34,7 +36,7 @@ public class sickbar extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_fourresult, container, false);
+        View view = inflater.inflate(R.layout.fragment_sickbar, container, false);
 
         // Firebase
         firebaseAuth = FirebaseAuth.getInstance();
@@ -107,6 +109,7 @@ public class sickbar extends Fragment {
         isTestFinished = true;
         questionTextView.setText("Тест завершён");
         hideButtons();
+        saveResultsToFirebase();
     }
 
     private void hideButtons() {
@@ -135,27 +138,47 @@ public class sickbar extends Fragment {
 
         String resultMessage = "Уровень депрессии: " + depressionLevel + "\n" + recommendation;
 
-        // Вывод результата в Toast
-        Toast.makeText(getContext(), resultMessage, Toast.LENGTH_LONG).show();
-
-        // Сохранение результата в Firebase
-        if (currentUser != null) {
-            String userId = currentUser.getUid();
-            String testName = "Шкала депрессии";
-            databaseReference.child(userId).child(testName).setValue(depressionLevel)
-                    .addOnSuccessListener(aVoid -> Log.d("Firebase", "Результат успешно сохранён"))
-                    .addOnFailureListener(e -> Log.e("Firebase", "Ошибка сохранения результата", e));
-        }
+        // Отображаем результат в MessageBox
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Результаты теста")
+                .setMessage(resultMessage)
+                .setPositiveButton("OK", null)
+                .show();
     }
 
-    // Проверка, является ли вопрос прямым
+    private void saveResultsToFirebase() {
+        if (currentUser == null) {
+            Log.e("Firebase", "currentUser is null. User is not authenticated.");
+            return;
+        }
+
+        String userId = currentUser.getUid();
+        String testName = "Шкала депрессии";
+        int depressionLevel = directScoreSum + inverseScoreSum;
+        TestResult newResult = new TestResult(testName, depressionLevel);
+
+        databaseReference.child(userId).child(testName).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DataSnapshot snapshot = task.getResult();
+
+                TestResult lastResult = snapshot.child("lastResult").getValue(TestResult.class);
+
+                databaseReference.child(userId).child(testName).child("previousResult").setValue(lastResult);
+                databaseReference.child(userId).child(testName).child("lastResult").setValue(newResult)
+                        .addOnSuccessListener(aVoid -> Log.d("Firebase", "Test result saved successfully"))
+                        .addOnFailureListener(e -> Log.e("Firebase", "Failed to save test result", e));
+            } else {
+                Log.e("Firebase", "Failed to fetch current results", task.getException());
+            }
+        });
+    }
+
     private boolean isDirectQuestion(int questionNumber) {
         return questionNumber == 1 || questionNumber == 3 || questionNumber == 4 || questionNumber == 7 ||
                 questionNumber == 8 || questionNumber == 9 || questionNumber == 10 || questionNumber == 13 ||
                 questionNumber == 15 || questionNumber == 19;
     }
 
-    // Проверка, является ли вопрос обратным
     private boolean isInverseQuestion(int questionNumber) {
         return questionNumber == 2 || questionNumber == 5 || questionNumber == 6 || questionNumber == 11 ||
                 questionNumber == 12 || questionNumber == 14 || questionNumber == 16 || questionNumber == 17 ||

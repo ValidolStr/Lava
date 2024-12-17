@@ -159,7 +159,15 @@ public class fiveresult extends Fragment {
 
         String resultMessage = "Ваш итоговый счёт: " + totalScore + "\n" + recommendation;
 
-        // Отображаем результат в Toast
-        Toast.makeText(getContext(), resultMessage, Toast.LENGTH_LONG).show();
+        // Создаём и показываем диалоговое окно
+        new androidx.appcompat.app.AlertDialog.Builder(getContext())
+                .setTitle("Результат теста")
+                .setMessage(resultMessage)
+                .setPositiveButton("OK", (dialog, which) -> {
+                    // Закрываем диалог
+                    dialog.dismiss();
+                })
+                .setCancelable(false) // Запрещаем закрытие диалога вне его
+                .show();
     }
 }

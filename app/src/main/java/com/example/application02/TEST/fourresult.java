@@ -8,11 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
 
 import com.example.application02.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -59,7 +60,6 @@ public class fourresult extends Fragment {
         buttonSometimes.setOnClickListener(v -> handleAnswer(2));
         buttonRarely.setOnClickListener(v -> handleAnswer(3));
         buttonNever.setOnClickListener(v -> handleAnswer(4));
-
         buttonResult.setOnClickListener(v -> showResults());
 
         // Получаем список вопросов из аргументов
@@ -121,6 +121,7 @@ public class fourresult extends Fragment {
         isTestFinished = true;
         questionTextView.setText("Тест завершён");
         hideButtons();
+        saveResultsToFirebase();
     }
 
     private void hideButtons() {
@@ -148,20 +149,45 @@ public class fourresult extends Fragment {
 
         String resultMessage = "РТ: " + rtResult + "\nЛТ: " + ltResult + "\nСредний балл: " + averageResult + "\n" + recommendation;
 
-        // Вывод результата в Toast
-        Toast.makeText(getContext(), resultMessage, Toast.LENGTH_LONG).show();
-
-        // Сохранение результата в Firebase
-        if (currentUser != null) {
-            String userId = currentUser.getUid();
-            String testName = "Шкала оценки уровня реактивной и личностной тревожности";
-            databaseReference.child(userId).child(testName).setValue(averageResult)
-                    .addOnSuccessListener(aVoid -> Log.d("Firebase", "Результат сохранён"))
-                    .addOnFailureListener(e -> Log.e("Firebase", "Ошибка сохранения", e));
-        }
+        // Отображаем результат в MessageBox
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Результаты теста")
+                .setMessage(resultMessage)
+                .setPositiveButton("OK", null)
+                .show();
     }
 
-    // Методы для проверки типа вопроса
+    private void saveResultsToFirebase() {
+        if (currentUser == null) {
+            Log.e("Firebase", "currentUser is null. User is not authenticated.");
+            return;
+        }
+
+        String userId = currentUser.getUid();
+        String testName = "Шкала оценки уровня реактивной и личностной тревожности";
+
+        int rtResult = rtScore1 - rtScore2 + 35;
+        int ltResult = ltScore1 - ltScore2 + 35;
+        int averageResult = (rtResult + ltResult) / 2;
+
+        TestResult newResult = new TestResult(testName, averageResult);
+
+        databaseReference.child(userId).child(testName).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DataSnapshot snapshot = task.getResult();
+
+                TestResult lastResult = snapshot.child("lastResult").getValue(TestResult.class);
+
+                databaseReference.child(userId).child(testName).child("previousResult").setValue(lastResult);
+                databaseReference.child(userId).child(testName).child("lastResult").setValue(newResult)
+                        .addOnSuccessListener(aVoid -> Log.d("Firebase", "Test result saved successfully"))
+                        .addOnFailureListener(e -> Log.e("Firebase", "Failed to save test result", e));
+            } else {
+                Log.e("Firebase", "Failed to fetch current results", task.getException());
+            }
+        });
+    }
+
     private boolean isReactiveQuestion(int questionNumber) {
         return (questionNumber >= 1 && questionNumber <= 20);
     }

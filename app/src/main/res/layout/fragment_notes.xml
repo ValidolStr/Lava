@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    style="@style/AppTheme">
+    style="@style/AppTheme"
+    android:background="@drawable/background">
 
     <!-- Заголовок -->
     <TextView
@@ -13,6 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Заметки"
+        android:textStyle="bold"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:gravity="center"
         android:layout_marginBottom="16dp" />
@@ -22,6 +25,8 @@
         android:id="@+id/noteTitleEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/white"
         android:layout_marginBottom="8dp"
         android:hint="Название заметки"
         android:minHeight="48dp" />
@@ -31,6 +36,8 @@
         android:id="@+id/noteContentEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/white"
         android:hint="Текст заметки"
         android:layout_marginBottom="16dp"
         android:gravity="top"
@@ -48,6 +55,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notesRecyclerView"
         android:layout_width="match_parent"
+        android:textStyle="bold"
+        android:textColor="@color/white"
         android:layout_height="0dp"
         android:layout_weight="1" />
 

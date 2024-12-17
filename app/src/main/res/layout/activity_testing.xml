@@ -6,22 +6,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TEST.TestingActivity"
-    tools:ignore="VisualLintBounds"
-    style="@style/AppTheme">
+    style="@style/AppTheme"
+    android:background="@drawable/background">
 
     <TextView
         android:id="@+id/metastart2"
         android:layout_width="376dp"
-        android:layout_height="49dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="casual"
         android:text="@string/testi"
         android:textAlignment="center"
         android:textColor="@color/design_default_color_primary"
-        android:textSize="34sp"
+        android:textSize="40sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:background="@android:color/transparent"
         tools:ignore="TextSizeCheck,VisualLintOverlap" />
 
     <Button
@@ -31,6 +33,7 @@
         android:layout_marginBottom="68dp"
         android:onClick="Jamptoback"
         android:text="@string/Test"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.075"
@@ -45,10 +48,11 @@
         android:layout_marginVertical="50dp"
         app:layout_constraintBottom_toTopOf="@+id/button8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.842"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/metastart2"
-        tools:ignore="VisualLintBounds" />
+        android:background="@android:color/transparent"
+        tools:ignore="VisualLintBounds"
+        />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"

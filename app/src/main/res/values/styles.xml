@@ -4,13 +4,19 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Основные цвета -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorPrimaryVariant">#874EA4</item>
         <item name="colorOnPrimary">@color/colorOnPrimary</item>
-        <item name="android:colorBackground">@color/colorBackground</item>
+
+        <!-- Цвет фона -->
+        <item name="android:colorBackground">@color/colorTextSecondary</item>
         <item name="colorOnBackground">@color/colorOnBackground</item>
+
+        <!-- Цвет кнопок -->
         <item name="colorButtonNormal">@color/colorButton</item>
         <item name="colorControlHighlight">@color/colorOnButton</item>
-        <item name="android:textColor">@color/colorTextPrimary</item>
+
+        <!-- Цвета текста -->
+        <item name="android:textColor">#FFFFFF</item>
         <item name="android:textColorSecondary">@color/colorTextSecondary</item>
     </style>
 

@@ -18,6 +18,7 @@
         android:layout_weight="1"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:textColor="@color/white"
         android:ellipsize="end"
         android:maxLines="1" />
 

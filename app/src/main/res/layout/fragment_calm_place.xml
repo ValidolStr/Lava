@@ -1,15 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".tecnics.CalmPlaceFragment"
-    style="@style/AppTheme">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/background"
+    tools:context=".tecnics.CalmPlaceFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:text="Прими удобную позу. Можешь сесть или лечь. Представь место, в котором тебе хорошо, спокойно и безопасно. Внимательно рассмотри его. Хорошо ли тебе там? Побудь мысленно в этом месте, ощути, как по телу разливается тепло и ощущение внутреннего счастья. В этом месте нет никаких проблем. Оно существует для того, чтобы туда шли за ресурсом и возможностью отпустить все свои тревоги, побыть в тишине и спокойствии. После того, как мысленно получилось побывать в своём «спокойном месте», можешь его нарисовать. И в моменты, когда захочется отдохнуть, посмотри на рисунок и мысленно возвращайся в свой уютный и укромный уголок, где всегда хорошо."
+        android:textSize="16sp"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="16dp"
+        android:justificationMode="inter_word" /> <!-- Выравнивание по ширине -->
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/editTextInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:gravity="top"
+        android:hint="Введите текст здесь"
+        android:inputType="textMultiLine"
+        android:minHeight="48dp"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Сохранить"
+        android:layout_gravity="center" />
+
+</LinearLayout>
