@@ -38,7 +38,7 @@ public class TeknicsActivity extends AppCompatActivity {
         // Создаем адаптер для списка
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
-                android.R.layout.simple_list_item_1,
+                R.layout.list_item,
                 techniques
         );
 

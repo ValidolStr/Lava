@@ -6,7 +6,8 @@
     android:orientation="vertical"
     android:padding="16dp"
     style="@style/AppTheme"
-    android:background="@drawable/background">
+    android:background="@drawable/background"
+    android:gravity="center"> <!-- Центрирование содержимого -->
 
     <!-- Поле для ввода проблемы -->
     <EditText
@@ -40,8 +41,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="14sp"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
         android:gravity="center"
         android:layout_marginBottom="16dp" />
 

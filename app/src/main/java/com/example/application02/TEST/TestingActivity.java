@@ -50,7 +50,7 @@ public class TestingActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView); // Привязываем ListView из разметки
         listTestObjects = new ArrayList<>(); // Инициализируем список объектов Test
         listTestTitles = new ArrayList<>(); // Инициализируем список строк для отображения
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listTestTitles); // Создаём адаптер
+        adapter = new ArrayAdapter<>(this, R.layout.list_item, listTestTitles); // Создаём адаптер
         listView.setAdapter(adapter); // Устанавливаем адаптер для ListView
 
         testlistRef = FirebaseDatabase.getInstance().getReference(tests); // Получаем ссылку на узел "tests" в Firebase

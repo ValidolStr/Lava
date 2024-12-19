@@ -120,7 +120,7 @@ public class FiveStopsFragment extends Fragment {
         StringBuilder result = new StringBuilder();
         result.append("Проблема: ").append(problem).append("\n\n");
         for (int i = 0; i < answers.size(); i++) {
-            result.append("Почему ").append(i + 1).append(": ").append(answers.get(i)).append("\n");
+            result.append("Почему ? ").append(": ").append(answers.get(i)).append("\n");
         }
 
         setMessage(result.toString());
